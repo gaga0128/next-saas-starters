@@ -2,11 +2,10 @@ import React from 'react';
 import styled from 'styled-components';
 import NextLink from 'next/link';
 import Button from 'components/Button';
-import Container from 'components/Container';
+import { Container } from 'components/Container';
 import OverTitle from 'components/OverTitle';
 import ButtonGroup from 'components/ButtonGroup';
 import { media } from 'utils/media';
-import SectionTitle from 'components/SectionTitle';
 
 export default function Cta() {
   return (
@@ -14,7 +13,7 @@ export default function Cta() {
       <Container>
         <Stack>
           <OverTitle>Lorem ipsum dolor sit amet</OverTitle>
-          <SectionTitle>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus delectus?</SectionTitle>
+          <Title>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Temporibus delectus?</Title>
           <Description>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda beatae accusamus deleniti nihil quas tempora numquam, vitae
             culpa.
@@ -36,6 +35,17 @@ export default function Cta() {
     </CtaWrapper>
   );
 }
+
+const Title = styled.div`
+  font-size: 5.2rem;
+  font-weight: bold;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+
+  ${media('<=tablet')} {
+    font-size: 4.6rem;
+  }
+`;
 
 const Description = styled.div`
   font-size: 1.8rem;

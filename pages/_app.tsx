@@ -1,5 +1,5 @@
-import 'swiper/css';
 import 'swiper/css/bundle';
+import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 
@@ -9,12 +9,13 @@ import { GlobalStyle } from 'components/GlobalStyles';
 import Navbar from 'components/Navbar';
 import { NavItems } from 'types';
 import NavigationDrawer from 'components/NavigationDrawer';
+import Footer from 'components/Footer';
 
 const navItems: NavItems = [
   { title: 'Why logoipsum', href: '/' },
   { title: 'Logoipsum features', href: '/features' },
-  { title: 'Contact', href: '/contact' },
-  { title: 'Sign up', href: '/sign-up', outlined: true },
+  { title: 'Help Center', href: '/help' },
+  { title: 'Contact', href: '/contact', outlined: true },
 ];
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -44,6 +45,8 @@ function MyApp({ Component, pageProps }: AppProps) {
       {/* <Navbar items={navItems} /> */}
       {/* </NavigationDrawer> */}
       {standaloneMarkup}
+      <div style={{ height: '300vh' }} />
+      <Footer />
     </>
   );
 }

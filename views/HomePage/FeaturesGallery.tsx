@@ -1,37 +1,40 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import NextImage from 'next/image';
-import Container from 'components/Container';
+import { Container } from 'components/Container';
 import { media } from 'utils/media';
 import Collapse from 'components/Collapse';
-import ThreeLayersCircle from 'components/ThreeLayersCircle';
-import OverTitle from 'components/OverTitle';
-import SectionTitle from 'components/SectionTitle';
 
 const TABS = [
   {
-    title: 'Find relevant media contacts - multiline title',
+    title: 'Find relevant media contacts',
     description:
-      '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>',
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.',
     imageUrl: '/demo-illustration-3.png',
-    baseColor: '249,82,120',
-    secondColor: '221,9,57',
   },
   {
-    title: 'Another amazing feature',
+    title: 'Find relevant media contacts2',
     description:
-      '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>',
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.',
     imageUrl: '/demo-illustration-4.png',
-    baseColor: '57,148,224',
-    secondColor: '99,172,232',
   },
   {
-    title: 'And yet... another truly fascinating feature',
+    title: 'Find relevant media contacts3',
     description:
-      '<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.</p>',
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.',
     imageUrl: '/demo-illustration-5.png',
-    baseColor: '88,193,132',
-    secondColor: '124,207,158',
+  },
+  {
+    title: 'Find relevant media contacts4',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.',
+    imageUrl: '/demo-illustration-6.png',
+  },
+  {
+    title: 'Find relevant media contacts5',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam quidem ipsam ratione dicta quis cupiditate consequuntur laborum ducimus iusto velit.',
+    imageUrl: '/demo-illustration-7.png',
   },
 ];
 
@@ -44,7 +47,7 @@ export default function FeaturesGallery() {
 
     return (
       <ImageContainer key={singleTab.title} isActive={isActive}>
-        <NextImage src={singleTab.imageUrl} layout="fill" objectFit="contain" priority={isFirst} />
+        <NextImage src={singleTab.imageUrl} layout="fill" objectFit="cover" priority={isFirst} />
       </ImageContainer>
     );
   });
@@ -53,17 +56,11 @@ export default function FeaturesGallery() {
     const isActive = singleTab.title === currentTab.title;
 
     return (
-      <Tab isActive={isActive} key={idx} onClick={() => handleTabClick(idx)}>
-        <TabTitleContainer>
-          <CircleContainer>
-            <ThreeLayersCircle baseColor={isActive ? 'transparent' : singleTab.baseColor} secondColor={singleTab.secondColor} />
-          </CircleContainer>
-          <h3>{singleTab.title}</h3>
-        </TabTitleContainer>
+      <Tab key={idx} onClick={() => handleTabClick(idx)}>
+        {singleTab.title}
         <Collapse isOpen={isActive} duration={300}>
-          <TabContent>
-            <div dangerouslySetInnerHTML={{ __html: singleTab.description }}></div>
-          </TabContent>
+          <h1>Your content goes here</h1>
+          <p>Put as many React or HTML components here.</p>
         </Collapse>
       </Tab>
     );
@@ -75,14 +72,8 @@ export default function FeaturesGallery() {
 
   return (
     <FeaturesGalleryWrapper>
-      <Content>
-        <OverTitle>features</OverTitle>
-        <SectionTitle>What are you signing in for?</SectionTitle>
-      </Content>
-      <GalleryWrapper>
-        <TabsContainer>{tabsMarkup}</TabsContainer>
-        {imagesMarkup}
-      </GalleryWrapper>
+      <TabsContainer>{tabsMarkup}</TabsContainer>
+      {imagesMarkup}
     </FeaturesGalleryWrapper>
   );
 }
@@ -90,25 +81,10 @@ export default function FeaturesGallery() {
 const FeaturesGalleryWrapper = styled(Container)`
   display: flex;
   align-items: center;
-  flex-direction: column;
-  justify-content: center;
-`;
-
-const GalleryWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  margin-top: 4rem;
 
   ${media('<=desktop')} {
     flex-direction: column;
   }
-`;
-
-const Content = styled.div`
-  & > *:not(:first-child) {
-    margin-top: 1rem;
-  }
-  text-align: center;
 `;
 
 const TabsContainer = styled.div`
@@ -128,8 +104,8 @@ const TabsContainer = styled.div`
 
 const ImageContainer = styled.div<{ isActive: boolean }>`
   position: relative;
-  overflow: hidden;
-  border-radius: 0.8rem;
+  height: 50rem;
+  border-radius: 0.6rem;
   flex: ${(p) => (p.isActive ? '2' : '0')};
   box-shadow: var(--shadow-md);
 
@@ -153,54 +129,19 @@ const ImageContainer = styled.div<{ isActive: boolean }>`
   }
 `;
 
-const Tab = styled.div<{ isActive: boolean }>`
+const Tab = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 2rem 1.5rem;
+  padding: 2rem 1rem;
   background: rgba(var(--secondary), 0.025);
-  opacity: ${(p) => (p.isActive ? 1 : 0.6)};
+  opacity: 0.9;
   cursor: pointer;
   border-radius: 0.6rem;
-  transition: opacity 0.2s;
 
   font-size: 1.6rem;
   font-weight: bold;
 
   ${media('<=desktop')} {
     width: 100%;
-  }
-`;
-
-const TabTitleContainer = styled.div`
-  display: flex;
-  align-items: center;
-
-  h3 {
-    flex: 1;
-  }
-`;
-
-const TabContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-weight: normal;
-  margin-top: 0.5rem;
-  font-size: 1.5rem;
-  padding-left: calc(5rem + 1.5rem);
-
-  ${media('<=tablet')} {
-    padding-left: calc(4rem + 1.25rem);
-  }
-
-  p {
-    font-weight: normal;
-  }
-`;
-
-const CircleContainer = styled.div`
-  flex: 0 calc(5rem + 1.5rem);
-
-  ${media('<=tablet')} {
-    flex: 0 calc(4rem + 1.25rem);
   }
 `;
