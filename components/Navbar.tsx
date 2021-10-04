@@ -2,13 +2,15 @@ import styled from 'styled-components';
 import Logo from './Logo';
 import NextLink from 'next/link';
 import React, { useRef, useState } from 'react';
-import { Container } from './Container';
+import Container from './Container';
 import Drawer from './Drawer';
 import { ScrollPositionEffectProps, useScrollPosition } from 'hooks/useScrollPosition';
 import { useRouter } from 'next/router';
 import { NavItems, SingleNavItem } from 'types';
 import { HamburgerIcon } from './HamburgerIcon';
 import { media } from 'utils/media';
+import Button from './Button';
+import { useNewsletterModalContext } from 'contexts/newsletter-modal.context';
 
 type NavbarProps = { items: NavItems };
 type ScrollingDirections = 'up' | 'down' | 'none';
@@ -62,9 +64,11 @@ export default function Navbar({ items }: NavbarProps) {
   return (
     <NavbarContainer hidden={isNavbarHidden} transparent={isTransparent}>
       <Content>
-        <LogoWrapper>
-          <Logo />
-        </LogoWrapper>
+        <NextLink href="/" passHref>
+          <LogoWrapper>
+            <Logo />
+          </LogoWrapper>
+        </NextLink>
         <NavItemList>
           {items.map((singleItem) => (
             <NavItem key={singleItem.href} {...singleItem} />
@@ -79,6 +83,16 @@ export default function Navbar({ items }: NavbarProps) {
 }
 
 function NavItem({ href, title, outlined }: SingleNavItem) {
+  const { setIsModalOpened } = useNewsletterModalContext();
+
+  function showNewsletterModal() {
+    setIsModalOpened(true);
+  }
+
+  if (outlined) {
+    return <CustomButton onClick={showNewsletterModal}>{title}</CustomButton>;
+  }
+
   return (
     <NavItemWrapper outlined={outlined}>
       <NextLink href={href} passHref>
@@ -87,6 +101,11 @@ function NavItem({ href, title, outlined }: SingleNavItem) {
     </NavItemWrapper>
   );
 }
+
+const CustomButton = styled(Button)`
+  padding: 0.75rem 1.5rem;
+  line-height: 1.8;
+`;
 
 const NavItemList = styled.div`
   display: flex;
@@ -103,8 +122,10 @@ const HamburgerMenuWrapper = styled.div`
   }
 `;
 
-const LogoWrapper = styled.div`
+const LogoWrapper = styled.a`
+  display: flex;
   margin-right: auto;
+  text-decoration: none;
 `;
 
 const NavItemWrapper = styled.li<Partial<SingleNavItem>>`
@@ -142,8 +163,7 @@ const NavbarContainer = styled.div<NavbarContainerProps>`
   height: 8rem;
   z-index: var(--z-navbar);
 
-  background-color: rgba(var(--background), 0.8);
-  backdrop-filter: blur(20px);
+  background-color: rgb(var(--navbarBackground));
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
   visibility: ${(p) => (p.hidden ? 'hidden' : 'visible')};
   transform: ${(p) => (p.hidden ? `translateY(-8rem) translateZ(0) scale(1)` : 'translateY(0) translateZ(0) scale(1)')};

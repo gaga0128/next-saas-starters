@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components';
 
 // default breakpoints
 // {
@@ -12,24 +12,29 @@ import { createGlobalStyle } from 'styled-components'
 export const GlobalStyle = createGlobalStyle`
 
 .light-theme {
-  --background: 255,255,255;
+  --background: 251,251,253;
   --text: 10,18,30;
   --textSecondary: 255,255,255;
   --primary: 22,115,255; 
   --secondary: 10,18,30;
   --tertiary: 231,241,251;
+  --inputBackground: 255,255,255;
+  --navbarBackground: 255,255,255;
+  --modalBackground: 251,251,253;
 }
 
 .dark-theme {
 }
 
 :root {
-  --font: 'Inter', sans-serif;
+  --font: 'Poppins', sans-serif;
   
-  --shadow-md: 0px 16px 24px rgb(4 15 31 / 6%), 0px 2px 6px rgb(4 15 31 / 4%), 0px 0px 1px rgb(4 15 31 / 4%);
+  --shadow-md: 0 2px 4px 0 rgb(12 0 46 / 4%);
+  --shadow-lg: 0 10px 14px 0 rgb(12 0 46 / 6%);
 
   --z-navbar: 8888;
   --z-drawer: 9999;
+  --z-modal: 9999;
 }
 
 /* Box sizing rules */
@@ -135,4 +140,4 @@ select {
     scroll-behavior: auto !important;
   }
 
-}`
+}`;

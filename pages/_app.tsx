@@ -1,5 +1,5 @@
-import 'swiper/css/bundle';
 import 'swiper/css';
+import 'swiper/css/bundle';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
 
@@ -9,13 +9,15 @@ import { GlobalStyle } from 'components/GlobalStyles';
 import Navbar from 'components/Navbar';
 import { NavItems } from 'types';
 import NavigationDrawer from 'components/NavigationDrawer';
-import Footer from 'components/Footer';
+import NewsletterModal from 'components/NewsletterModal';
+import { NewsletterModalContextProvider, useNewsletterModalContext } from 'contexts/newsletter-modal.context';
+import { PropsWithChildren } from 'react';
 
 const navItems: NavItems = [
   { title: 'Why logoipsum', href: '/' },
   { title: 'Logoipsum features', href: '/features' },
-  { title: 'Help Center', href: '/help' },
-  { title: 'Contact', href: '/contact', outlined: true },
+  { title: 'Contact', href: '/contact' },
+  { title: 'Sign up', href: '/sign-up', outlined: true },
 ];
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -38,17 +40,30 @@ function MyApp({ Component, pageProps }: AppProps) {
         {/* <script async src="https://www.google-analytics.com/analytics.js"></script> */}
       </Head>
       <GlobalStyle />
-      <NavigationDrawer items={navItems}>
+
+      <Providers>
+        <Modals />
         <Navbar items={navItems} />
-      </NavigationDrawer>
-      {/* <NavigationDrawer items={navItems}> */}
-      {/* <Navbar items={navItems} /> */}
-      {/* </NavigationDrawer> */}
-      {standaloneMarkup}
-      <div style={{ height: '300vh' }} />
-      <Footer />
+        {standaloneMarkup}
+      </Providers>
     </>
   );
+}
+
+function Providers<T>({ children }: PropsWithChildren<T>) {
+  return (
+    <NewsletterModalContextProvider>
+      <NavigationDrawer items={navItems}>{children}</NavigationDrawer>
+    </NewsletterModalContextProvider>
+  );
+}
+
+function Modals() {
+  const { isModalOpened, setIsModalOpened } = useNewsletterModalContext();
+  if (!isModalOpened) {
+    return null;
+  }
+  return <NewsletterModal onClose={() => setIsModalOpened(false)} />;
 }
 
 export default MyApp;
